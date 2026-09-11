@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brügge Bestattung – Katalog für Angehörige</title>
+<meta name="katalog-salt" content="a1a811b54d0a9b7f096d75d95ac80d48">
+<meta name="katalog-iter" content="300000">
+<meta name="katalog-daten" content="daten/katalog.enc?v=88f4a8ede8">
+<meta name="katalog-app" content="assets/app.js?v=cea1e47025">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* Geschützte Online-Fassung: Sperrbildschirm, Verwaltung ausgeblendet */
+body.locked .header-tools, body.locked .floatnav, .site-footer .admin-link, #adminBar { display:none !important; }
+.unlock { display:flex; justify-content:center; padding:56px 18px 80px; }
+.unlock .card { background:#fff; border:1px solid #e3ddd2; border-radius:16px; padding:28px 30px; width:min(440px,100%); box-shadow:0 10px 30px rgba(0,0,0,.08); display:grid; gap:14px; text-align:center; }
+.unlock .siegel { width:84px; height:84px; margin:0 auto 4px; }
+.unlock h2 { margin:0; font-family:var(--serif, Georgia, serif); font-weight:600; font-size:1.6rem; }
+.unlock p { margin:0; color:#6b6257; font-size:1rem; line-height:1.45; }
+.unlock input[type=password] { border:1px solid #cfc6b8; border-radius:10px; padding:13px 14px; font-size:1.1rem; text-align:center; letter-spacing:.06em; }
+.unlock .merken { display:flex; justify-content:center; align-items:center; gap:8px; font-size:.95rem; color:#6b6257; }
+.unlock .err { min-height:22px; font-size:.95rem; color:#9a3b2c; font-weight:600; }
+.unlock .btn { justify-content:center; font-size:1.05rem; padding:13px 18px; }
+</style>
+</head>
+<body>
+
+<!-- Verwaltungs-Leiste (nur im Verwaltungsmodus sichtbar) -->
+<div id="adminBar" class="admin-bar hidden">
+  <div class="wrap">
+    <span class="tag"><span class="dot"></span> Verwaltung – nur für Sie sichtbar</span>
+    <div class="admin-actions">
+      <button class="btn primary" id="btnNew">+ Neu anlegen</button>
+      <button class="btn ghost" id="btnExport">Sichern (Export)</button>
+      <button class="btn ghost" id="btnImport">Wiederherstellen</button>
+      <button class="btn ghost" id="btnReset">Auf Original zurück</button>
+      <button class="btn ghost" id="btnPin">Code ändern</button>
+      <button class="btn ghost" id="btnExitAdmin">Verwaltung verlassen</button>
+    </div>
+  </div>
+</div>
+
+<!-- Kopfzeile -->
+<header class="site-header">
+  <div class="wrap bar">
+    <button class="brand" id="brandHome" title="Zur Startseite">
+      <img src="assets/logo-siegel.svg" alt="Brügge Bestattung">
+      <span class="name">Brügge Bestattung<small>Katalog für Angehörige</small></span>
+    </button>
+    <div class="header-tools">
+      <div class="fontctl" title="Schrift größer oder kleiner stellen">
+        <span class="lbl">Schrift</span>
+        <button id="fontDown" aria-label="Schrift kleiner">A−</button>
+        <button id="fontUp" aria-label="Schrift größer">A+</button>
+      </div>
+      <button class="pill-btn is-empty" id="merkBtn" title="Ihre Auswahl ansehen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Meine Auswahl <span class="count" id="merkCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="app"><div class="unlock"><div class="card"><p>Katalog wird geladen …</p></div></div></main>
+
+<!-- Fußzeile -->
+<footer class="site-footer">
+  <div class="wrap row">
+    <div class="brand">
+      <span class="name">Brügge Bestattung<small>Mit Ruhe und Würde begleiten</small></span>
+    </div>
+    <div class="copy">
+      <button class="admin-link" id="adminLink">Verwaltung</button>
+      &nbsp;·&nbsp; Geschützte Online-Ansicht · © Brügge Bestattung
+    </div>
+  </div>
+</footer>
+
+<!-- Orientierungshilfe: erscheint beim Scrollen (für leichte Bedienung) -->
+<div class="floatnav" id="floatNav" aria-hidden="true">
+  <button class="fn-btn" id="fnHome" type="button" title="Zurück zur Startseite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+    <span>Startseite</span>
+  </button>
+  <button class="fn-btn" id="fnTop" type="button" title="Nach ganz oben">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+    <span>Nach oben</span>
+  </button>
+  <button class="fn-btn" id="fnDown" type="button" title="Seite langsam nach unten fahren – nochmal drücken zum Stoppen">
+    <svg class="fn-ic-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12l7 7 7-7"/></svg>
+    <svg class="fn-ic-stop hidden" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>
+    <span class="fn-label">Nach unten</span>
+  </button>
+</div>
+
+<!-- Detail-Fenster -->
+<dialog class="sheet" id="detailDlg">
+  <button class="close" id="detailClose" aria-label="Schließen">×</button>
+  <div class="sheet-grid" id="detailBody"></div>
+</dialog>
+
+<!-- Merkliste-Fenster -->
+<dialog class="mini-dialog" id="merkDlg">
+  <h2>Ihre Auswahl</h2>
+  <p id="merkIntro" style="color:var(--muted);margin:0 0 12px;">Hier sammeln sich die Stücke, die Ihnen gefallen. In Ruhe zu Hause anschauen – nichts ist verbindlich.</p>
+  <div id="merkContent"></div>
+  <div class="dlg-foot">
+    <button class="btn ghost no-print" id="merkPrint">Auswahl drucken</button>
+    <button class="btn ghost no-print" id="merkClear">Liste leeren</button>
+    <button class="btn primary no-print" id="merkCloseBtn">Schließen</button>
+  </div>
+</dialog>
+
+<!-- PIN-Fenster -->
+<dialog class="mini-dialog" id="pinDlg">
+  <h2>Verwaltung öffnen</h2>
+  <p style="color:var(--muted);margin:0 0 6px;">Bitte Ihren Zugangs-Code eingeben.</p>
+  <form class="pin-form" id="pinForm" method="dialog">
+    <input type="password" inputmode="numeric" id="pinInput" placeholder="••••" autocomplete="off" maxlength="12">
+    <div class="dlg-foot" style="justify-content:flex-start">
+      <button class="btn primary" type="submit">Öffnen</button>
+      <button class="btn ghost" type="button" id="pinCancel">Abbrechen</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Formular-Fenster (Neu/Bearbeiten) -->
+<dialog class="mini-dialog" id="formDlg">
+  <h2 id="formTitle">Produkt bearbeiten</h2>
+  <form id="prodForm" method="dialog">
+    <div class="form-grid">
+      <div class="field full">
+        <label>Name</label>
+        <input type="text" id="fName" required placeholder="z. B. Naturstoffurne Samtton Oliv">
+      </div>
+      <div class="field">
+        <label>Kategorie</label>
+        <select id="fCat">
+          <option value="urne">Urne</option>
+          <option value="sarg">Sarg</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Lieferzeit</label>
+        <input type="text" id="fLiefer" placeholder="z. B. vorrätig oder 2–3 Tage">
+      </div>
+      <div class="field">
+        <label>Preis (optional)</label>
+        <input type="text" id="fPreis" placeholder="z. B. 480 €">
+        <div class="hint">Leer lassen, wenn kein Preis gezeigt werden soll.</div>
+      </div>
+      <div class="field">
+        <label>Artikelnummer (intern)</label>
+        <input type="text" id="fArt" placeholder="für Ihre Bestellung">
+      </div>
+      <div class="field full">
+        <label>Beschreibung</label>
+        <textarea id="fDesc" placeholder="Kurze, würdevolle Beschreibung"></textarea>
+      </div>
+      <div class="field full">
+        <label>Foto</label>
+        <div class="imgpick">
+          <img class="prev" id="fPrev" alt="" src="assets/logo-monogramm.svg">
+          <div>
+            <input type="file" id="fFile" accept="image/*">
+            <div class="hint">Für neue Produkte: ein Foto auswählen. Vorhandene behalten ihr Foto, wenn Sie keins wählen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn danger" type="button" id="formDelete" style="margin-right:auto">Löschen</button>
+      <button class="btn ghost" type="button" id="formCancel">Abbrechen</button>
+      <button class="btn primary" type="submit">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<input type="file" id="importFile" accept="application/json,.json" class="hidden">
+<div class="toast" id="toast"></div>
+
+<script src="assets/zugang.js?v=e91ffe1a83"></script>
+</body>
+</html>

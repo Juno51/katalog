@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 300" role="img" aria-label="Brügge Bestattung">
+  <!-- Doppelring -->
+  <circle cx="140" cy="105" r="72" fill="none" stroke="#2f6f8c" stroke-width="2.4"/>
+  <circle cx="140" cy="105" r="62.5" fill="none" stroke="#2f6f8c" stroke-width="1.1" opacity=".6"/>
+
+  <!-- Monogramm B -->
+  <text x="140" y="107" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'Times New Roman', serif" font-size="88" fill="#9c7c4c">B</text>
+
+  <!-- kleiner Zweig als Krönung oben -->
+  <g fill="#9c7c4c">
+    <path d="M0,0 Q5,-8 0,-16 Q-5,-8 0,0 Z" transform="translate(140,31)"/>
+    <path d="M0,0 Q5,-8 0,-16 Q-5,-8 0,0 Z" transform="translate(140,31) rotate(42)"/>
+    <path d="M0,0 Q5,-8 0,-16 Q-5,-8 0,0 Z" transform="translate(140,31) rotate(-42)"/>
+  </g>
+
+  <!-- Raute unten -->
+  <rect x="135.5" y="172.5" width="9" height="9" transform="rotate(45 140 177)" fill="#9c7c4c"/>
+
+  <!-- Wortmarke -->
+  <text x="140" y="233" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="35" letter-spacing="3" fill="#1b2a33">BRÜGGE</text>
+  <line x1="72" y1="248" x2="208" y2="248" stroke="#d9d2c4" stroke-width="1.4"/>
+  <text x="140" y="271" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="15.5" letter-spacing="7" fill="#2f6f8c">BESTATTUNG</text>
+</svg>

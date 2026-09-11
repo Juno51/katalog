@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Brügge Bestattung – Siegel">
+  <defs>
+    <path id="topArc" d="M30,120 A90,90 0 0 1 210,120" fill="none"/>
+    <path id="botArc" d="M210,120 A90,90 0 0 1 30,120" fill="none"/>
+  </defs>
+  <circle cx="120" cy="120" r="112" fill="none" stroke="#2f6f8c" stroke-width="3"/>
+  <circle cx="120" cy="120" r="104" fill="none" stroke="#9c7c4c" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.5 8.2"/>
+  <circle cx="120" cy="120" r="76" fill="none" stroke="#2f6f8c" stroke-width="1.2" opacity=".55"/>
+  <g fill="#2f6f8c" font-family="Georgia, 'Times New Roman', serif" font-size="15.5" font-weight="600" letter-spacing="2.5">
+    <text><textPath href="#topArc" startOffset="50%" text-anchor="middle">BRÜGGE · BESTATTUNG</textPath></text>
+  </g>
+  <g fill="#2f6f8c" font-family="Georgia, 'Times New Roman', serif" font-size="15.5" font-weight="600" letter-spacing="4">
+    <text><textPath href="#botArc" startOffset="50%" text-anchor="middle">SINCE 2025</textPath></text>
+  </g>
+  <g fill="#9c7c4c">
+    <path d="M0,-6 L1.5,-1.5 L6,0 L1.5,1.5 L0,6 L-1.5,1.5 L-6,0 L-1.5,-1.5 Z" transform="translate(30,120)"/>
+    <path d="M0,-6 L1.5,-1.5 L6,0 L1.5,1.5 L0,6 L-1.5,1.5 L-6,0 L-1.5,-1.5 Z" transform="translate(210,120)"/>
+  </g>
+  <!-- Buchstabe „B" als feste Vektorform (aus Luminari ausgelagert – überall gleich) -->
+  <g transform="translate(120,120) scale(0.098,-0.098) translate(-357,-367)" fill="#9c7c4c" fill-rule="nonzero">
+    <path d="M173 21Q150 8 115.0 -6.0Q80 -20 42 -20Q19 -20 9.0 -16.0Q-1 -12 -1 0Q-1 4 0.5 9.0Q2 14 4.0 17.5Q6 21 9.0 22.5Q12 24 15 20Q21 12 33.0 11.0Q45 10 59 10Q80 11 97.0 24.5Q114 38 122 61Q126 75 130.0 105.0Q134 135 136.5 177.0Q139 219 140.5 270.5Q142 322 142 379Q142 509 135.0 581.5Q128 654 117 665Q109 671 97.0 674.5Q85 678 72.5 679.0Q60 680 48.0 680.0Q36 680 29 679Q22 678 18.0 683.0Q14 688 14 693Q14 711 27 711Q34 711 52.0 709.5Q70 708 93.5 706.5Q117 705 143.0 704.0Q169 703 190 703Q216 703 238.5 711.0Q261 719 285.0 729.0Q309 739 337.5 747.0Q366 755 404 755Q451 755 492.0 747.0Q533 739 563.0 722.5Q593 706 610.5 680.0Q628 654 628 619Q628 579 611.0 546.5Q594 514 568.5 489.0Q543 464 514.5 446.5Q486 429 463 420Q500 417 544.0 407.5Q588 398 626.0 378.5Q664 359 689.5 327.0Q715 295 715 247Q715 209 699.5 174.5Q684 140 658.0 110.5Q632 81 598.5 56.5Q565 32 528.5 15.0Q492 -2 454.5 -11.5Q417 -21 385 -21Q366 -21 337.5 -17.5Q309 -14 279.0 -8.0Q249 -2 220.5 5.5Q192 13 173 21ZM259 225Q260 173 262.0 150.0Q264 127 266 115Q269 98 280.5 81.5Q292 65 310.5 51.0Q329 37 353.5 28.5Q378 20 408 20Q440 20 468.0 31.0Q496 42 516.5 65.5Q537 89 549.0 126.0Q561 163 561 215Q561 262 546.0 295.0Q531 328 503.5 348.5Q476 369 437.0 378.0Q398 387 350 387Q322 387 297.0 386.5Q272 386 260 385Q259 374 259.0 362.0Q259 350 259 336ZM273 659Q271 646 269.0 623.0Q267 600 265.0 569.5Q263 539 261.5 503.5Q260 468 259 430Q260 427 270.0 425.5Q280 424 293.5 423.0Q307 422 322.0 421.5Q337 421 349 421Q368 421 382.0 422.5Q396 424 406.5 427.5Q417 431 426.0 436.0Q435 441 444 449Q461 462 475.5 491.0Q490 520 490 571Q490 607 480.0 634.5Q470 662 454.0 680.5Q438 699 417.5 708.0Q397 717 375 717Q364 717 348.0 714.0Q332 711 317.0 704.5Q302 698 289.5 686.5Q277 675 273 659Z"/>
+  </g>
+</svg>
