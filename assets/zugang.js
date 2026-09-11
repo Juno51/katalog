@@ -12,7 +12,7 @@
   const ITER = Number(meta("katalog-iter") || 300000);
   const DATEN_URL = meta("katalog-daten") || "daten/katalog.enc";
   const APP_URL = meta("katalog-app") || "assets/app.js";
-  const DB_NAME = "bruegge_katalog_zugang", DB_STORE = "s", DB_KEY = "schluessel";
+  const PW_KEY = "bruegge_katalog_zugang";
   const PLATZHALTER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="8" fill="#ece7dd"/></svg>');
   const app = document.getElementById("app");
@@ -24,7 +24,6 @@
   async function schluesselAusWort(pw) {
     const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveBits"]);
     const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: SALT, iterations: ITER, hash: "SHA-256" }, km, 256);
-    // nicht exportierbar: kann gemerkt werden, ohne dass das Zugangswort irgendwo im Klartext liegt
     return crypto.subtle.importKey("raw", bits, { name: "AES-CBC" }, false, ["decrypt"]);
   }
   function entschluesseln(key, buf) {
@@ -32,23 +31,10 @@
     return crypto.subtle.decrypt({ name: "AES-CBC", iv: u.slice(0, 16) }, key, u.slice(16));
   }
 
-  // ---------- Schlüssel auf dem Gerät merken (IndexedDB) ----------
-  function db() {
-    return new Promise((res, rej) => {
-      const r = indexedDB.open(DB_NAME, 1);
-      r.onupgradeneeded = () => r.result.createObjectStore(DB_STORE);
-      r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
-    });
-  }
-  async function merkeSchluessel(key) {
-    try { const d = await db(); await new Promise((res, rej) => { const tx = d.transaction(DB_STORE, "readwrite"); tx.objectStore(DB_STORE).put(key, DB_KEY); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); } catch (e) {}
-  }
-  async function gemerkterSchluessel() {
-    try { const d = await db(); return await new Promise((res, rej) => { const r = d.transaction(DB_STORE).objectStore(DB_STORE).get(DB_KEY); r.onsuccess = () => res(r.result || null); r.onerror = () => rej(r.error); }); } catch (e) { return null; }
-  }
-  async function vergissSchluessel() {
-    try { const d = await db(); d.transaction(DB_STORE, "readwrite").objectStore(DB_STORE).delete(DB_KEY); } catch (e) {}
-  }
+  // ---------- Zugangswort auf dem Gerät merken (wie bei der Akquise-Seite) ----------
+  function merkeWort(pw) { try { localStorage.setItem(PW_KEY, pw); } catch (e) {} }
+  function gemerktesWort() { try { return localStorage.getItem(PW_KEY); } catch (e) { return null; } }
+  function vergissWort() { try { localStorage.removeItem(PW_KEY); } catch (e) {} }
 
   // ---------- Bilder: nur laden, was ins Bild kommt; entschlüsselt → Blob-URL ----------
   const BILD = { key: null, cache: new Map(), laufend: new Map(), warteschlange: [], aktiv: 0, MAX: 6, io: null };
@@ -144,7 +130,7 @@
       catch (e2) { err.textContent = "Dieser Browser kann die Seite nicht entschlüsseln – bitte Safari, Chrome oder Firefox verwenden."; return; }
       try {
         await oeffnen(key);
-        if (merken) merkeSchluessel(key);
+        if (merken) merkeWort(pw.trim());
       } catch (e3) {
         if (e3 && /HTTP|fetch|app/i.test(String(e3.message || e3))) err.textContent = "Der Katalog konnte nicht geladen werden – bitte Internetverbindung prüfen und neu laden.";
         else err.textContent = "Zugangswort falsch – bitte noch einmal versuchen.";
@@ -160,10 +146,10 @@
       return;
     }
     datenHolen().catch(() => {});
-    const key = await gemerkterSchluessel();
-    if (key) {
-      try { await oeffnen(key); return; }
-      catch (e) { await vergissSchluessel(); }
+    const gemerkt = gemerktesWort();
+    if (gemerkt) {
+      try { await oeffnen(await schluesselAusWort(gemerkt)); return; }
+      catch (e) { vergissWort(); }
     }
     zeigeSperre("");
   })();
