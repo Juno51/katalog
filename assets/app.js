@@ -23,7 +23,7 @@
   function saveData() { /* Online-Fassung: Katalog wird nicht lokal gespeichert */ }
   function loadMerk() { try { return JSON.parse(lsGet(LS_MERK)) || []; } catch (e) { return []; } }
   function saveMerk() { lsSet(LS_MERK, JSON.stringify(state.merk)); }
-  function getPin() { return lsGet(LS_PIN) || "c71e7e61b02603fb002e1507"; }
+  function getPin() { return lsGet(LS_PIN) || "3c614a82442ea60df3dda516"; }
 
   // ---------- Zustand ----------
   const state = {
